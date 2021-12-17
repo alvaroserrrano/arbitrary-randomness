@@ -1,3 +1,15 @@
+# Arbitrary Randomness
+
+## Functionality
+
+1. Call the open API at https://randomuser.me/ to fetch a list of users. Display a reasonable amount of users in a table / list view with a summary of the information about each user. Use your best judgement about what to display. :)
+2. Have a text input that the user can type into in order to quickly filter the visible list of users by their first / last name.
+3. Have a nationality selector / filter, so you the user can retrieve from the server people from specific nationalities. The API supports sending multiple nationalities so your UI should allow selecting more than one as well. See the documentation at https://randomuser.me/documentation#nationalities
+
+### Codebase
+
+![Visualization of the codebase](./diagram.svg)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
