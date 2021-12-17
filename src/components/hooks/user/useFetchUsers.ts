@@ -18,5 +18,5 @@ export function useFetchUsers(amount: number) {
         setLoading(false);
       });
   }, [amount]);
-  return { users, loading, error };
+  return { users, loading, error, setUsers, setLoading, setError };
 }
