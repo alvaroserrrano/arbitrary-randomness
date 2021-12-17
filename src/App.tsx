@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from './components/Card';
+import { useWeb3React } from '@web3-react/core';
+import React, { useState } from 'react';
 import { CardList } from './components/CardList';
 import Navbar from './components/Navbar';
+import { useUsers } from './hooks/users/useUsers';
+import { injected } from './wallet/Connector';
 
 export interface Location {
   street: string;
@@ -19,15 +21,9 @@ export interface Location {
 }
 
 function App() {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch('https://randomuser.me/api/?results=50')
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data.results);
-      });
-  }, []);
-
+  const users = useUsers();
+  const [minting, setMinting] = useState(false);
+  const { active, account, library, activate, deactivate } = useWeb3React();
   return (
     <div className='bg-gradient-to-br from-gray-900 to-gray-700 p-5 h-screen w-screen'>
       <Navbar />
