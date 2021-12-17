@@ -1,9 +1,8 @@
 import React from 'react';
 import Navbar from './components/Navbar';
-import './styles/main.css';
 function App() {
   return (
-    <div className='App bg-black text-white p-20 min-h-screen max-w-full'>
+    <div className='bg-gray-900 p-5 h-screen w-screen'>
       <Navbar />
     </div>
   );

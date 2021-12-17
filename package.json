@@ -19,13 +19,12 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "build:tailwind": "tailwindcss build src/main.css -o src/tailwind.output.css",
-    "prestart": "npm run build:tailwind",
-    "prebuild": "npm run build:tailwind",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:tailwind": "npx tailwindcss build -i ./src/styles/tailwind.css -o dist/tailwind.css"
   },
   "eslintConfig": {
     "extends": [
