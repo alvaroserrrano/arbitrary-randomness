@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from './components/Card';
+import React from 'react';
 import { CardList } from './components/CardList';
+import { useFetchUsers } from './components/hooks/user/useFetchUsers';
 import Navbar from './components/Navbar';
 
 export interface Location {
@@ -19,19 +19,21 @@ export interface Location {
 }
 
 function App() {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch('https://randomuser.me/api/?results=50')
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data.results);
-      });
-  }, []);
+  const { users, error, loading } = useFetchUsers(50);
 
   return (
     <div className='bg-gradient-to-br from-gray-900 to-gray-700 p-5 h-screen w-screen'>
       <Navbar />
-      <CardList users={users} />
+      <div className='flex items-center justify-center m-4'>
+        <button className='flex justify-center items-center bg-gradient-to-r from-pink-500 to-yellow-700 rounded-md text-center text-gray-200 font-bold text-xl ml-4 p-4 outline-none border-none hover:bg-pink-600 shadow-pink-500/75'>
+          {loading ? 'Loading...' : 'Randomize Users'}
+        </button>
+      </div>
+      {error && <p className='text-red-500'>{error}</p>}
+      {users && <CardList users={users} />}
+
+      {/* <CardList users={users} /> */}
+
       {/* // <Card 
          id={0}
          firstName='Alvaro'
