@@ -23,13 +23,14 @@ function App() {
   const { users, error, loading, setUsers, setLoading, setError } =
     useFetchUsers(50);
   const [usersAmount, setUsersAmount] = useState(50);
+  const [selectedUser, setSelectedUser] = useState(0);
 
   return (
     <>
       <div className='bg-gradient-to-br from-gray-900 to-gray-700 p-5 h-screen w-screen'>
         <Navbar />
-        <MainCard />
-        <div className='flex items-center justify-center m-4'>
+        {users && <MainCard users={users} selectedUser={selectedUser} />}
+        <div className='flex items-center justify-center mt-4'>
           <button
             onClick={() => {
               fetch(`https://randomuser.me/api/?results=${usersAmount}`)
@@ -49,7 +50,12 @@ function App() {
           </button>
         </div>
         {error && <p className='text-red-500'>{error}</p>}
-        {users && <CardList users={users} />}
+        {users && (
+          <>
+            {/* <MainCard users={users} selectedUser={selectedUser} /> */}
+            <CardList users={users} setSelectedUser={setSelectedUser} />
+          </>
+        )}
       </div>
     </>
   );
