@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import { selectedUser as selectedUserAtom } from './atoms';
 import { CardList } from './components/CardList';
-import { useFetchUsers } from './components/hooks/user/useFetchUsers';
 import { MainCard } from './components/MainCard';
 import Navbar from './components/Navbar';
+import { useUsers } from './hooks/user/useUsers';
+import { User } from './types';
 
 export interface Location {
   street: string;
@@ -20,10 +23,9 @@ export interface Location {
 }
 
 function App() {
-  const { users, error, loading, setUsers, setLoading, setError } =
-    useFetchUsers(50);
-  const [usersAmount, setUsersAmount] = useState(50);
-  const [selectedUser, setSelectedUser] = useState(0);
+  const { users, loading, error, setUsers, setLoading, setError } =
+    useUsers(50);
+  const [selectedUser, setSelectedUser] = useRecoilState(selectedUserAtom);
 
   return (
     <>
@@ -33,7 +35,7 @@ function App() {
         <div className='flex items-center justify-center mt-4'>
           <button
             onClick={() => {
-              fetch(`https://randomuser.me/api/?results=${usersAmount}`)
+              fetch(`https://randomuser.me/api/?results=50`)
                 .then((res) => res.json())
                 .then((data) => {
                   setUsers(data.results);
@@ -52,8 +54,10 @@ function App() {
         {error && <p className='text-red-500'>{error}</p>}
         {users && (
           <>
-            {/* <MainCard users={users} selectedUser={selectedUser} /> */}
-            <CardList users={users} setSelectedUser={setSelectedUser} />
+            <CardList
+              users={users as User[]}
+              setSelectedUser={setSelectedUser}
+            />
           </>
         )}
       </div>

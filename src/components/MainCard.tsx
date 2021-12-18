@@ -24,7 +24,7 @@ export const MainCard = (props: Props) => {
               />
             </div>
             <div className='flex flex-col mx-4'>
-              <h1 className='px-4 text-lg text-gray-200 font-bold'>
+              <h1 className='px-4 text-4xl text-gray-200 font-bold'>
                 {activeUser.name.first} {activeUser.name.last}
                 <span className='text-gray-200 text-md'>
                   •# {activeUser.nat}

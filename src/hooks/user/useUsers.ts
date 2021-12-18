@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { User } from '../../../types';
-export function useFetchUsers(amount: number) {
-  const [users, setUsers] = useState<User[]>([]);
+import { useRecoilState } from 'recoil';
+import { users as usersAtom } from '../../atoms';
+export function useUsers(amount: number) {
+  const [users, setUsers] = useRecoilState(usersAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -18,5 +19,5 @@ export function useFetchUsers(amount: number) {
         setLoading(false);
       });
   }, [amount]);
-  return { users, loading, error, setUsers, setLoading, setError };
+  return { users, loading, error, setLoading, setError, setUsers };
 }
