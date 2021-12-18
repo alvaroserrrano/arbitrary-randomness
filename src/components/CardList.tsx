@@ -8,19 +8,21 @@ interface Props {
 
 export const CardList = (props: Props) => {
   return (
-    <div className='snap-x flex flex-no-wrap items-center m-4 cursor-pointer overflow-x-scroll scroll-smooth mt-4 pb-4 border-b-2 border-solid border-white scrollbar-hide'>
-      {props.users.map((user: User) => (
-        <div className='snap-center'>
-          <Card
-            id={user.nat}
-            firstName={user.name.first}
-            lastName={user.name.last}
-            picture={user.picture.medium}
-            price={user.dob.age}
-            key={user.id.value}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className='snap-x snap-mandatory flex items-center cursor-pointer overflow-x-hidden scroll-smooth scroll'>
+        {props.users.map((user: User) => (
+          <div className='snap-center border-solid border-yellow-200'>
+            <Card
+              id={user.nat}
+              firstName={user.name.first}
+              lastName={user.name.last}
+              picture={user.picture.medium}
+              price={user.dob.age}
+              key={user.id.value}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
