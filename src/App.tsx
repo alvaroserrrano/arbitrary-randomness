@@ -1,11 +1,14 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
-import { selectedUser as selectedUserAtom } from './atoms';
+import {
+  filter as filterAtom,
+  filteredUsers as filteredUsersAtom,
+  selectedUser as selectedUserAtom,
+} from './atoms';
 import { CardList } from './components/CardList';
 import { MainCard } from './components/MainCard';
 import Navbar from './components/Navbar';
 import { useUsers } from './hooks/user/useUsers';
-import { User } from './types';
 
 export interface Location {
   street: string;
@@ -24,9 +27,10 @@ export interface Location {
 
 function App() {
   const { users, loading, error, setUsers, setLoading, setError } =
-    useUsers(50);
+    useUsers(500);
   const [selectedUser, setSelectedUser] = useRecoilState(selectedUserAtom);
-
+  const [filteredUsers, setFilteredUsers] = useRecoilState(filteredUsersAtom);
+  const [filter, setFilter] = useRecoilState(filterAtom);
   return (
     <>
       <div className='bg-gradient-to-br from-gray-900 to-gray-700 p-5 h-screen w-screen'>
@@ -52,12 +56,14 @@ function App() {
           </button>
         </div>
         {error && <p className='text-red-500'>{error}</p>}
-        {users && (
+        {filteredUsers && (
           <>
-            <CardList
-              users={users as User[]}
-              setSelectedUser={setSelectedUser}
-            />
+            <CardList users={filteredUsers} setSelectedUser={setSelectedUser} />
+          </>
+        )}
+        {users && filteredUsers.length === 0 && (
+          <>
+            <CardList users={users} setSelectedUser={setSelectedUser} />
           </>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { users as usersAtom } from '../../atoms';
+import { filter as filterAtom, users as usersAtom } from '../../atoms';
 export function useUsers(amount: number) {
   const [users, setUsers] = useRecoilState(usersAtom);
   const [loading, setLoading] = useState(false);

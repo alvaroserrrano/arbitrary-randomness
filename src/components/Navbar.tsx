@@ -1,12 +1,35 @@
 import React from 'react';
 import { AiOutlineSwap } from 'react-icons/ai';
 import { GiFarmer, GiLiquidSoap, GiTowerBridge } from 'react-icons/gi';
+import { useRecoilState } from 'recoil';
 import logo from '../assets/logo.png';
 import searchIcon from '../assets/search.png';
 import theme from '../assets/theme.png';
+import {
+  filter as filterAtom,
+  filteredUsers as filteredUsersAtom,
+  users as usersAtom,
+} from '../atoms';
 interface Props {}
 
 const Navbar = (props: Props) => {
+  const [users, setUsers] = useRecoilState(usersAtom);
+  const [filter, setFilter] = useRecoilState(filterAtom);
+  const [filteredUsers, setFilteredUsers] = useRecoilState(filteredUsersAtom);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value);
+    setFilteredUsers(
+      users.filter(
+        (user) =>
+          user.name.first
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          user.name.last.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          user.email.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          user.nat.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
   return (
     <>
       <div className='flex items-center space-between text-white'>
@@ -20,7 +43,9 @@ const Navbar = (props: Props) => {
           <input
             className='bg-transparent rounded border-none w-full outline-none text-gray-100'
             type='text'
-            placeholder='Search user'
+            placeholder='Search user by name, email, nationality...'
+            value={filter}
+            onChange={onChange}
           />
         </div>
         <div className='flex mr-2 group'>
