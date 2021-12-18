@@ -12,7 +12,7 @@ interface Props {
 export const Card = (props: Props) => {
   return (
     <>
-      <div className='h-96 w-72 bg-slate-700 rounded-lg overflow-hidden m-7'>
+      <div className='h-96 w-72 bg-slate-700 rounded-lg overflow-hidden m-7 hover:bg-slate-800 '>
         <img className='w-full' src={props.picture} alt={props.firstName} />
         <div className='pt-4 pl-4'>
           <p className='text-lg '>
