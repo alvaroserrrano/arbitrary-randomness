@@ -27,11 +27,9 @@ export interface Location {
 }
 
 function App() {
-  const { users, loading, error, setUsers, setLoading, setError } =
-    useUsers(500);
+  const { users } = useUsers(500);
   const [selectedUser, setSelectedUser] = useRecoilState(selectedUserAtom);
   const [filteredUsers, setFilteredUsers] = useRecoilState(filteredUsersAtom);
-  const [filter, setFilter] = useRecoilState(filterAtom);
   return (
     <>
       <div className='bg-gradient-to-br from-gray-900 to-gray-700 p-5 h-screen w-screen'>

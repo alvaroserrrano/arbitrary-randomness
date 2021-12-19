@@ -1,3 +1,4 @@
+import { useWeb3React } from '@web3-react/core';
 import React from 'react';
 import { AiOutlineSwap } from 'react-icons/ai';
 import { GiFarmer, GiLiquidSoap, GiTowerBridge } from 'react-icons/gi';
@@ -10,11 +11,30 @@ import {
   filteredUsers as filteredUsersAtom,
   users as usersAtom,
 } from '../atoms';
+import { injected } from '../wallet';
+
 interface Props {}
 
 const Navbar = (props: Props) => {
+  async function connect() {
+    try {
+      await activate(injected);
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
+  async function disconnect() {
+    try {
+      deactivate();
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+
   const [users, setUsers] = useRecoilState(usersAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
+  const { active, account, library, activate, deactivate } = useWeb3React();
   const [filteredUsers, setFilteredUsers] = useRecoilState(filteredUsersAtom);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
@@ -87,11 +107,25 @@ const Navbar = (props: Props) => {
             <img src={theme} alt='Theme' />
           </div>
         </div>
-        <button className='flex items-center bg-gradient-to-r from-pink-500 to-pink-800 rounded-md m-4 p-2 outline-none border-none hover:bg-pink-600 shadow-pink-500/75'>
-          <p className='text-gray-200 text-center font-bold text-xl'>
-            Connect Wallet
-          </p>
-        </button>
+        {active ? (
+          <button
+            onClick={disconnect}
+            className='flex items-center bg-gradient-to-r from-pink-500 to-pink-800 rounded-md m-4 p-2 outline-none border-none hover:bg-pink-600 shadow-pink-500/75'
+          >
+            <p className='text-gray-200 text-center font-bold text-xl'>
+              Disconnect Wallet
+            </p>
+          </button>
+        ) : (
+          <button
+            onClick={connect}
+            className='flex items-center bg-gradient-to-r from-pink-500 to-pink-800 rounded-md m-4 p-2 outline-none border-none hover:bg-pink-600 shadow-pink-500/75'
+          >
+            <p className='text-gray-200 text-center font-bold text-xl'>
+              Connect Wallet
+            </p>
+          </button>
+        )}
       </div>
     </>
   );
